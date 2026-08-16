@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okonkwor Paul — Data Science &amp; Bioinformatics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10151B;
+    --surface:#171F27;
+    --surface-2:#1D2733;
+    --line: rgba(237,239,242,0.10);
+    --line-strong: rgba(237,239,242,0.18);
+    --text:#EDEFF2;
+    --text-dim:#96A0AC;
+    --text-faint:#5F6A76;
+    --amber:#E8A94A;
+    --amber-dim: rgba(232,169,74,0.14);
+    --cyan:#5FD3C4;
+    --cyan-dim: rgba(95,211,196,0.12);
+    --serif: 'Newsreader', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-attachment: fixed;
+  }
+
+  a{ color:inherit; }
+
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+
+  /* Eyebrow / terminal-style section labels */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.02em;
+    color:var(--amber);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{ content:"›"; color:var(--text-faint); }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(10px);
+    background: rgba(16,21,27,0.82);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand{ font-family:var(--mono); font-size:14px; color:var(--text); text-decoration:none; letter-spacing:0.02em; }
+  .brand b{ color:var(--amber); font-weight:600; }
+  .navlinks{ display:flex; gap:28px; list-style:none; font-family:var(--mono); font-size:13px; }
+  .navlinks a{ text-decoration:none; color:var(--text-dim); transition:color .15s; }
+  .navlinks a:hover{ color:var(--amber); }
+  .nav-cta{
+    font-family:var(--mono); font-size:13px; color:var(--ink)!important;
+    background:var(--amber); padding:8px 16px; border-radius:3px; text-decoration:none;
+    font-weight:600;
+  }
+  @media (max-width:720px){ .navlinks{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{ position:relative; overflow:hidden; padding:96px 0 88px; border-bottom:1px solid var(--line); }
+  .hero-grid{ display:grid; grid-template-columns: 1.15fr 0.85fr; gap:56px; align-items:center; }
+  @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } .hero-lanes{ height:220px; margin-top:8px; } }
+
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(38px, 5.4vw, 62px);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    color:var(--text);
+  }
+  .hero h1 em{ font-style:italic; color:var(--amber); font-weight:500; }
+  .hero p.lede{
+    margin-top:22px; max-width:46ch;
+    font-size:17px; color:var(--text-dim);
+  }
+  .hero-ctas{ display:flex; gap:12px; margin-top:34px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:13.5px; padding:11px 20px; border-radius:3px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line-strong); color:var(--text);
+    transition: border-color .15s, transform .15s;
+  }
+  .btn:hover{ border-color:var(--amber); transform:translateY(-1px); }
+  .btn.primary{ background:var(--amber); color:var(--ink); border-color:var(--amber); font-weight:600; }
+  .btn.primary:hover{ background:#f0b45f; }
+
+  /* gel-lane signature graphic */
+  .hero-lanes{ height:340px; position:relative; }
+  .hero-lanes svg{ width:100%; height:100%; }
+  .lane-cap{
+    position:absolute; bottom:-26px; left:0; right:0;
+    font-family:var(--mono); font-size:11px; color:var(--text-faint);
+    display:flex; justify-content:space-between; padding:0 4px;
+  }
+
+  /* ---------- SECTION shell ---------- */
+  section{ padding:84px 0; border-bottom:1px solid var(--line); }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:44px; gap:20px; flex-wrap:wrap; }
+  h2{
+    font-family:var(--serif); font-weight:500; font-size:clamp(26px,3vw,34px);
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap:56px; }
+  @media (max-width:780px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-text p{ font-size:16.5px; color:var(--text-dim); max-width:56ch; }
+  .about-text p + p{ margin-top:14px; }
+  .timeline{ border-left:1px solid var(--line-strong); padding-left:22px; display:flex; flex-direction:column; gap:22px; }
+  .tl-item .yr{ font-family:var(--mono); font-size:12.5px; color:var(--amber); }
+  .tl-item .desc{ font-size:14.5px; color:var(--text-dim); margin-top:3px; }
+
+  /* ---------- FEATURED PROJECT ---------- */
+  .feature-card{
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .feature-meta{
+    display:flex; gap:22px; flex-wrap:wrap;
+    padding:20px 28px; border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:12.5px; color:var(--text-dim);
+    background:var(--surface-2);
+  }
+  .feature-meta span b{ color:var(--cyan); font-weight:500; }
+  .feature-body{ padding:32px 28px 34px; }
+  .feature-body h3{
+    font-family:var(--serif); font-weight:500; font-size:26px; margin-bottom:12px;
+  }
+  .feature-body > p.sub{ color:var(--text-dim); max-width:64ch; margin-bottom:28px; font-size:15.5px; }
+
+  .feature-cols{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-bottom:28px; }
+  @media (max-width:640px){ .feature-cols{ grid-template-columns:1fr; } }
+  .fc-label{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .fc-body{ font-size:14.5px; color:var(--text-dim); }
+  .fc-body ul{ padding-left:18px; margin-top:6px; }
+  .fc-body li{ margin-bottom:5px; }
+
+  .callout{
+    border:1px dashed var(--amber);
+    background:var(--amber-dim);
+    border-radius:4px;
+    padding:16px 18px;
+    font-size:14px;
+    color:#F0CE93;
+    margin-bottom:26px;
+  }
+  .callout b{ color:var(--amber); }
+
+  .feature-links{ display:flex; gap:12px; flex-wrap:wrap; }
+
+  /* ---------- OTHER PROJECTS ---------- */
+  .grid3{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  @media (max-width:960px){ .grid3{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:640px){ .grid3{ grid-template-columns:1fr; } }
+  .pcard{
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:6px;
+    padding:22px; display:flex; flex-direction:column; gap:12px;
+  }
+  .pcard .tag-row{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{
+    font-family:var(--mono); font-size:10.5px; color:var(--cyan);
+    background:var(--cyan-dim); padding:3px 8px; border-radius:20px;
+    border:1px solid rgba(95,211,196,0.25);
+  }
+  .pcard h4{ font-family:var(--serif); font-weight:500; font-size:18px; }
+  .pcard p{ font-size:13.8px; color:var(--text-dim); }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px 40px; }
+  @media (max-width:640px){ .skills-grid{ grid-template-columns:1fr; } }
+  .skill-group .fc-label{ margin-bottom:10px; }
+  .skill-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:var(--mono); font-size:12.5px; color:var(--text);
+    border:1px solid var(--line-strong); padding:6px 12px; border-radius:3px;
+    background:var(--surface);
+  }
+
+  /* ---------- PUB / CERT ---------- */
+  .split2{ display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  @media (max-width:780px){ .split2{ grid-template-columns:1fr; } }
+  .cite{ font-size:14px; color:var(--text-dim); padding-bottom:16px; border-bottom:1px solid var(--line); margin-bottom:16px; }
+  .cite:last-child{ border-bottom:none; }
+  .cite .status{ font-family:var(--mono); font-size:11px; color:var(--amber); display:block; margin-top:6px; }
+  .cert-list{ display:flex; flex-direction:column; gap:14px; }
+  .cert-item{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line); padding-bottom:12px; font-size:14.5px; }
+  .cert-item span.src{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ text-align:left; border-bottom:none; padding-bottom:64px; }
+  .contact h2{ margin-bottom:16px; }
+  .contact p{ color:var(--text-dim); max-width:50ch; margin-bottom:30px; font-size:16px; }
+  .contact-links{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  footer{ padding:28px 0 60px; }
+  footer .wrap{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:11.5px; color:var(--text-faint); flex-wrap:wrap; gap:10px; }
+
+  ::selection{ background:var(--amber); color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none!important; transition:none!important; }
+  }
+
+  [data-reveal]{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  [data-reveal].in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><b>OP</b> // okonkwor.paul</a>
+    <ul class="navlinks">
+      <li><a href="#about">whoami</a></li>
+      <li><a href="#featured">featured_project</a></li>
+      <li><a href="#projects">other_work</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#pubs">publications</a></li>
+      <li><a href="#testimonials">references</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">data_science / bioinformatics / evidence_synthesis</div>
+      <h1>I turn clinical &amp; genomic<br>data into <em>evidence</em><br>people can act on.</h1>
+      <p class="lede">Molecular biologist turned data-driven researcher. I lead evidence-based reviews at Nigeria's national medical research institute, manage clinical study data for an NIH-funded trial, and build independent data science projects end to end — dataset to documented, reproducible analysis.</p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="#featured">View featured project ↓</a>
+        <a class="btn" href="https://github.com/okonkwor-paul" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="mailto:okonkworpaul@gmail.com">Email</a>
+      </div>
+    </div>
+    <div class="hero-lanes" aria-hidden="true">
+      <svg viewBox="0 0 320 340" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E8A94A" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#E8A94A" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        <!-- lane guides -->
+        <g stroke="rgba(237,239,242,0.08)" stroke-width="1">
+          <line x1="20" y1="0" x2="20" y2="340"/>
+          <line x1="76" y1="0" x2="76" y2="340"/>
+          <line x1="132" y1="0" x2="132" y2="340"/>
+          <line x1="188" y1="0" x2="188" y2="340"/>
+          <line x1="244" y1="0" x2="244" y2="340"/>
+          <line x1="300" y1="0" x2="300" y2="340"/>
+        </g>
+        <!-- gel bands, varying widths/positions/opacity -->
+        <g fill="url(#fade)">
+          <rect x="8" y="24" width="24" height="6" rx="3" opacity="0.9"/>
+          <rect x="8" y="54" width="24" height="4" rx="2" opacity="0.5"/>
+          <rect x="8" y="98" width="24" height="9" rx="3" opacity="0.85"/>
+          <rect x="8" y="150" width="24" height="5" rx="2" opacity="0.4"/>
+          <rect x="8" y="210" width="24" height="7" rx="3" opacity="0.7"/>
+
+          <rect x="64" y="18" width="24" height="5" rx="2" opacity="0.55"/>
+          <rect x="64" y="70" width="24" height="10" rx="3" opacity="0.95" fill="#5FD3C4"/>
+          <rect x="64" y="130" width="24" height="6" rx="3" opacity="0.6"/>
+          <rect x="64" y="188" width="24" height="4" rx="2" opacity="0.35"/>
+          <rect x="64" y="248" width="24" height="8" rx="3" opacity="0.75"/>
+
+          <rect x="120" y="40" width="24" height="7" rx="3" opacity="0.8"/>
+          <rect x="120" y="92" width="24" height="4" rx="2" opacity="0.4"/>
+          <rect x="120" y="140" width="24" height="9" rx="3" opacity="0.9"/>
+          <rect x="120" y="200" width="24" height="6" rx="2" opacity="0.55"/>
+          <rect x="120" y="260" width="24" height="5" rx="2" opacity="0.4"/>
+
+          <rect x="176" y="30" width="24" height="5" rx="2" opacity="0.5"/>
+          <rect x="176" y="80" width="24" height="8" rx="3" opacity="0.85" fill="#5FD3C4"/>
+          <rect x="176" y="150" width="24" height="4" rx="2" opacity="0.35"/>
+          <rect x="176" y="210" width="24" height="7" rx="3" opacity="0.7"/>
+          <rect x="176" y="270" width="24" height="6" rx="2" opacity="0.5"/>
+
+          <rect x="232" y="16" width="24" height="6" rx="3" opacity="0.6"/>
+          <rect x="232" y="66" width="24" height="9" rx="3" opacity="0.9"/>
+          <rect x="232" y="128" width="24" height="5" rx="2" opacity="0.45"/>
+          <rect x="232" y="182" width="24" height="7" rx="3" opacity="0.7"/>
+          <rect x="232" y="244" width="24" height="4" rx="2" opacity="0.35"/>
+
+          <rect x="288" y="36" width="24" height="8" rx="3" opacity="0.8"/>
+          <rect x="288" y="94" width="24" height="5" rx="2" opacity="0.5"/>
+          <rect x="288" y="150" width="24" height="6" rx="3" opacity="0.6"/>
+          <rect x="288" y="204" width="24" height="4" rx="2" opacity="0.35"/>
+          <rect x="288" y="256" width="24" height="9" rx="3" opacity="0.85"/>
+        </g>
+      </svg>
+      <div class="lane-cap">
+        <span>WT</span><span>KO1</span><span>KO2</span><span>P1</span><span>P2</span><span>CTRL</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="eyebrow">whoami</div>
+      <h2 style="margin-bottom:22px;">About</h2>
+      <div class="about-text">
+        <p>I'm a molecular biologist by training and a data scientist by the way I actually work now — every project below starts with a real, messy dataset, not a tutorial one.</p>
+        <p>Currently I lead evidence-based reviews at the Nigerian Institute of Medical Research and manage clinical data for an NIH-funded blood pressure and stroke prevention study. Alongside that, I build independent data projects and take on freelance research-methodology work — including data extraction and analysis for systematic reviews.</p>
+        <p>The two projects below aren't as separate as they look. I study population health risk in a clinical setting through the stroke-prevalence work, and I study it again from inside the exact community I come from — as a performing artist — through the dancer-hygiene dashboard. Same instinct, two very different rooms: find where the risk actually lives, and measure it properly.</p>
+        <p>I completed the ALX Data Science diploma in May 2025 on a full-ride scholarship, formalizing the tooling my lab and research background had already pushed me toward.</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item"><div class="yr">2022</div><div class="desc">BSc Applied Biology &amp; Biotechnology, Covenant University — final-year genetics data submitted to the NCBI Gene Bank.</div></div>
+      <div class="tl-item"><div class="yr">2023</div><div class="desc">Joined NIMR — evidence-based reviews &amp; freelance research consulting begin.</div></div>
+      <div class="tl-item"><div class="yr">2024</div><div class="desc">Genomic Data Science certification, Johns Hopkins University.</div></div>
+      <div class="tl-item"><div class="yr">2026</div><div class="desc">Research Assistant, I-TEST BP/Stroke Study (NIH-funded) — clinical data management via REDCap.</div></div>
+      <div class="tl-item"><div class="yr">2025</div><div class="desc">ALX Data Science Diploma completed (13-month program, full-ride scholarship).</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="featured">
+  <div class="wrap">
+    <div class="eyebrow">featured_project.ipynb</div>
+    <h2 style="margin-bottom:30px;">Stroke Prevalence Analysis</h2>
+
+    <div class="feature-card" data-reveal>
+      <div class="feature-meta">
+        <span>DATASET <b>stroke_prevalence_datasheet_amuwo_odofin.csv</b></span>
+        <span>N <b>60</b></span>
+        <span>SECTIONS <b>19</b></span>
+        <span>TOOLS <b>Python · Jupyter</b></span>
+        <span>STATUS <b>Complete, reproducible</b></span>
+      </div>
+      <div class="feature-body">
+        <h3>Screening data from the Amuwo Odofin community, Lagos</h3>
+        <p class="sub">An independent, end-to-end analysis of a real community health-screening dataset — built as a reproducible package, not a one-off script.</p>
+
+        <div class="feature-cols">
+          <div>
+            <div class="fc-label">Method</div>
+            <div class="fc-body">
+              <ul>
+                <li>Cleaned and structured raw screening data</li>
+                <li>Applied WHO 2000 BMI classification</li>
+                <li>Applied ACC/AHA 2017 hypertension thresholds</li>
+                <li>Applied WHO 2008 waist-to-hip ratio standards</li>
+                <li>19-section exploratory &amp; statistical analysis</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="fc-label">Delivered as</div>
+            <div class="fc-body">
+              <ul>
+                <li>Jupyter Notebook (full analysis)</li>
+                <li>Written portfolio report</li>
+                <li>README + requirements.txt + .gitignore</li>
+                <li>Fixed a real Python 2.7 / 3.14 environment conflict (MGLTools) via PATH ordering</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <b>Key finding —</b> Using a composite stroke-risk score, 76.7% of the 60 adults screened fell into the moderate-to-high risk band (40% high, 36.7% moderate) — with 71.7% also showing high cardiovascular risk by waist-to-hip ratio. In a single community screening, more than three in four adults carried elevated stroke risk.
+        </div>
+
+        <div class="fc-label" style="margin-bottom:12px;">Figure — from the notebook</div>
+        <img src="figures/fig7_stroke_risk_dashboard.png" alt="Stroke Risk Profile Dashboard — six-panel figure showing stroke risk by sex, hypertension by sex, BMI vs systolic BP by risk, WHR risk by BMI category, mean WHR by age group, and key risk prevalence percentages" style="width:100%; border-radius:4px; border:1px solid var(--line-strong); margin-bottom:28px;">
+
+        <div class="feature-links">
+          <a class="btn primary" href="#" target="_blank" rel="noopener">View Notebook ↗</a>
+          <a class="btn" href="#" style="opacity:.55; pointer-events:none;">GitHub Repo — publishing soon</a>
+          <a class="btn" href="#" target="_blank" rel="noopener">Portfolio Report (PDF) ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">other_work/</div>
+    <div class="section-head">
+      <h2>Research &amp; Data Work</h2>
+    </div>
+    <div class="grid3">
+      <div class="pcard" data-reveal>
+        <div class="tag-row">
+          <span class="tag">QIIME2</span><span class="tag">DADA2</span><span class="tag">DESeq2</span>
+        </div>
+        <h4>Gut-Microbiome Metagenomic Pipeline</h4>
+        <p>Designed a full 16S rRNA analysis pipeline — QIIME2, DADA2, SILVA, LEfSe, DESeq2, PICRUSt2 — for an independent client study on obese patients.</p>
+      </div>
+      <div class="pcard" data-reveal>
+        <div class="tag-row">
+          <span class="tag">Evidence Synthesis</span><span class="tag">Data Extraction</span>
+        </div>
+        <h4>Systematic Review Data Work</h4>
+        <p>Data extraction and analysis on systematic reviews for NIMR and overseas freelance clients — building review-ready evidence tables from primary literature.</p>
+      </div>
+      <div class="pcard" data-reveal>
+        <div class="tag-row">
+          <span class="tag">REDCap</span><span class="tag">Clinical Data</span>
+        </div>
+        <h4>I-TEST BP/Stroke Study</h4>
+        <p>Clinical data management for an NIH-funded study — recruitment, consent, REDCap data entry, and linkage-to-care follow-up.</p>
+      </div>
+      <div class="pcard" data-reveal>
+        <div class="tag-row">
+          <span class="tag">Power BI</span><span class="tag">Survey Data</span>
+        </div>
+        <h4>Dancer Hygiene Practices Dashboard</h4>
+        <p>Self-run survey and Power BI dashboard on hygiene behaviour among dancers — handwashing and showering frequency, facility access — broken down by age and gender. Bridges the community hygiene workshops with data analysis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">skills.json</div>
+    <h2 style="margin-bottom:36px;">Skills &amp; Tools</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="fc-label">Languages / Analysis</div>
+        <div class="skill-chips">
+          <span class="chip">Python</span><span class="chip">Jupyter</span><span class="chip">SQL</span><span class="chip">R</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="fc-label">BI / Cloud</div>
+        <div class="skill-chips">
+          <span class="chip">Power BI</span><span class="chip">AWS Fundamentals</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="fc-label">Bioinformatics</div>
+        <div class="skill-chips">
+          <span class="chip">QIIME2</span><span class="chip">DADA2</span><span class="chip">SILVA</span>
+          <span class="chip">LEfSe</span><span class="chip">DESeq2</span><span class="chip">PICRUSt2</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="fc-label">Clinical Data</div>
+        <div class="skill-chips"><span class="chip">REDCap</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="fc-label">Research Methods</div>
+        <div class="skill-chips">
+          <span class="chip">Systematic Review</span><span class="chip">Evidence Synthesis</span><span class="chip">Protocol Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pubs">
+  <div class="wrap split2">
+    <div>
+      <div class="eyebrow">publications/</div>
+      <h2 style="margin-bottom:26px;">Publications</h2>
+      <div class="cite">
+        Omonhinmin, C.A., Okonkwor, P.B., et al. "Dataset on rbcL-based intra-specific diversity and population structure of <i>Parkia biglobosa</i> (Jacq.) in Nigeria." <i>Data in Brief</i>, 53, 110146 (2024).
+        <span class="status">PUBLISHED</span>
+      </div>
+      <div class="cite">
+        Muinah, F.A., Okonkwor, P.B., Ogbeh, J. "Enteric Infections in slums in Sub-Saharan Africa."
+        <span class="status">UNDER REVIEW · BMC</span>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">certifications/</div>
+      <h2 style="margin-bottom:26px;">Certifications</h2>
+      <div class="cert-list">
+        <div class="cert-item"><span>Genomic Data Science</span><span class="src">Johns Hopkins University</span></div>
+        <div class="cert-item"><span>Data Science Diploma</span><span class="src">ALX — completed May 2025</span></div>
+        <div class="cert-item"><span>AI Career Essentials</span><span class="src">ALX &amp; Mastercard Foundation</span></div>
+        <div class="cert-item"><span>Research Ethics Certification</span><span class="src">CBR Nigeria</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="eyebrow">references/</div>
+    <h2 style="margin-bottom:30px;">What people I've worked with say</h2>
+    <div class="split2">
+      <div class="cite" style="border-bottom:none;">
+        "As a research intern, Paul has demonstrated exceptional dedication, skill, and potential in genomics and bioinformatics... his ability to translate complex scientific data into meaningful applications makes him an ideal candidate."
+        <span class="status">DR. MUINAH ADENIKE FOWORA — Senior Research Fellow, NIMR (supervisor, 2+ years)</span>
+      </div>
+      <div class="cite" style="border-bottom:none;">
+        "Paul stands out because he consistently takes initiative — eagerly ready to learn new technical skills and contributing beyond expectations... he demonstrates strong emotional intelligence and self-regulation, a strong skill in collaborative work."
+        <span class="status">IBILOLA OMOLAPO — Managerial Supervisor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="eyebrow">contact.sh</div>
+    <h2>Open to data science &amp; bioinformatics opportunities.</h2>
+    <p>If you're looking at this for the Cardtonic Upskill Data Science track, or anything adjacent — reach out directly.</p>
+    <div class="contact-links">
+      <a class="btn primary" href="mailto:okonkworpaul@gmail.com">Email me ↗</a>
+      <a class="btn" href="https://github.com/okonkwor-paul" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" href="https://www.linkedin.com/in/okonkwor-paul/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Okonkwor Paul</span>
+    <span>Lagos, Nigeria</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
